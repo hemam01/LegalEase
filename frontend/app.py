@@ -7,6 +7,11 @@ from core.document_formatter import (
     format_txt
 )
 
+from frontend.ui_components import (
+    display_document_preview,
+    display_download_section
+)
+
 
 st.set_page_config(
     page_title="LegalEase",
@@ -85,12 +90,8 @@ if st.button("Generate Document"):
 
 if "generated_document" in st.session_state:
 
-    st.subheader("Generated Document")
-
-    edited_document = st.text_area(
-        "Preview / Edit",
-        value=st.session_state["generated_document"],
-        height=500
+    edited_document = display_document_preview(
+        st.session_state["generated_document"]
     )
 
     st.session_state["generated_document"] = edited_document
@@ -99,26 +100,8 @@ if "generated_document" in st.session_state:
     docx_data = format_docx(edited_document)
     pdf_data = format_pdf(edited_document)
 
-    st.subheader("Download Document")
-
-    st.download_button(
-        label="Download TXT",
-        data=txt_data,
-        file_name="legal_document.txt",
-        mime="text/plain"
+    display_download_section(
+        txt_data,
+        docx_data,
+        pdf_data
     )
-
-    st.download_button(
-        label="Download DOCX",
-        data=docx_data,
-        file_name="legal_document.docx",
-        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-    )
-
-    st.download_button(
-        label="Download PDF",
-        data=pdf_data,
-        file_name="legal_document.pdf",
-        mime="application/pdf"
-    )
-    
