@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
-from core.document_generator import GeminiDocumentGenerator
+from ai_core.gemini_generator import GeminiDocumentGenerator
 
 router = APIRouter()
 
