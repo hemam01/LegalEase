@@ -216,3 +216,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# LegalEase generated files
+generated_document.docx
+generated_document.pdf

@@ -1,3 +1,5 @@
+import os
+
 import streamlit as st
 import requests
 
@@ -18,6 +20,8 @@ st.set_page_config(
     page_icon="⚖️",
     layout="wide"
 )
+
+BACKEND_URL = os.getenv("LEGAL_EASE_API_URL", "http://127.0.0.1:8000")
 
 st.title("⚖️ LegalEase")
 st.subheader("AI-Powered Legal Document Generator")
@@ -61,7 +65,7 @@ if st.button("Generate Document"):
     else:
         try:
             response = requests.post(
-                "http://127.0.0.1:8000/generate",
+                f"{BACKEND_URL}/generate",
                 json={
                     "document_type": document_type,
                     "parties": parties,
@@ -79,7 +83,13 @@ if st.button("Generate Document"):
                 st.success("Document generated successfully!")
 
             else:
-                st.error("Failed to generate the document.")
+                try:
+                    error_detail = response.json().get("detail", response.text)
+                except ValueError:
+                    error_detail = response.text
+
+                st.error(f"Failed to generate the document. Status code: {response.status_code}")
+                st.code(error_detail)
 
         except requests.exceptions.RequestException:
             st.error(
