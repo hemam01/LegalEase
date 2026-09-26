@@ -1,7 +1,10 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
+from core.document_generator import GeminiDocumentGenerator
 
 router = APIRouter()
+
+generator = GeminiDocumentGenerator()
 
 
 class DocumentRequest(BaseModel):
@@ -13,10 +16,13 @@ class DocumentRequest(BaseModel):
 
 @router.post("/generate")
 def generate_document(request: DocumentRequest):
+    document = generator.generate_document(
+        document_type=request.document_type,
+        parties=request.parties,
+        terms=request.terms,
+        dates=request.dates
+    )
+
     return {
-        "message": "Document generation endpoint is ready",
-        "document_type": request.document_type,
-        "parties": request.parties,
-        "terms": request.terms,
-        "dates": request.dates
+        "document": document
     }
