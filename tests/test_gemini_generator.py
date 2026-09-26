@@ -16,3 +16,4 @@ def test_generator_returns_document_from_user_input_when_api_is_unavailable(monk
     assert "Alice and Bob" in document
     assert "Salary: $100,000 annually" in document
     assert "2026-09-26" in document
+    
