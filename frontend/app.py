@@ -1,12 +1,17 @@
-import os
+import sys
+from pathlib import Path
 
+ROOT_DIR = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT_DIR))
+
+import os
 import streamlit as st
 import requests
 
 from core.document_formatter import (
+    format_txt,
     format_docx,
-    format_pdf,
-    format_txt
+    format_pdf
 )
 
 from frontend.ui_components import (
