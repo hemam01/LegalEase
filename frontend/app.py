@@ -1,6 +1,13 @@
 import streamlit as st
 import requests
 
+from core.document_formatter import (
+    format_docx,
+    format_pdf,
+    format_txt
+)
+
+
 st.set_page_config(
     page_title="LegalEase",
     page_icon="⚖️",
@@ -9,6 +16,7 @@ st.set_page_config(
 
 st.title("⚖️ LegalEase")
 st.subheader("AI-Powered Legal Document Generator")
+
 
 document_type = st.selectbox(
     "Document Type",
@@ -21,24 +29,30 @@ document_type = st.selectbox(
     ]
 )
 
+
 parties = st.text_area(
     "Parties Involved",
     placeholder="Enter the names/details of the parties..."
 )
+
 
 terms = st.text_area(
     "Terms and Conditions",
     placeholder="Enter the required terms and conditions..."
 )
 
+
 dates = st.text_input(
     "Effective Date",
     placeholder="Enter the effective date..."
 )
 
+
 if st.button("Generate Document"):
+
     if not parties or not terms or not dates:
         st.warning("Please fill in all required fields.")
+
     else:
         try:
             response = requests.post(
@@ -52,8 +66,11 @@ if st.button("Generate Document"):
             )
 
             if response.status_code == 200:
+
                 result = response.json()
+
                 st.session_state["generated_document"] = result["document"]
+
                 st.success("Document generated successfully!")
 
             else:
@@ -65,7 +82,9 @@ if st.button("Generate Document"):
                 "Please make sure the FastAPI server is running."
             )
 
+
 if "generated_document" in st.session_state:
+
     st.subheader("Generated Document")
 
     edited_document = st.text_area(
@@ -75,3 +94,31 @@ if "generated_document" in st.session_state:
     )
 
     st.session_state["generated_document"] = edited_document
+
+    txt_data = format_txt(edited_document)
+    docx_data = format_docx(edited_document)
+    pdf_data = format_pdf(edited_document)
+
+    st.subheader("Download Document")
+
+    st.download_button(
+        label="Download TXT",
+        data=txt_data,
+        file_name="legal_document.txt",
+        mime="text/plain"
+    )
+
+    st.download_button(
+        label="Download DOCX",
+        data=docx_data,
+        file_name="legal_document.docx",
+        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    )
+
+    st.download_button(
+        label="Download PDF",
+        data=pdf_data,
+        file_name="legal_document.pdf",
+        mime="application/pdf"
+    )
+    
