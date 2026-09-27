@@ -14,7 +14,7 @@ The demonstration includes the project introduction, features, execution process
 
 **Google Drive Video Link:**
 
-> Add the final Google Drive link here after uploading the demonstration video.
+> https://legalease-3dnebkfbkugmt5tzfkndka.streamlit.app/
 
 ## 3. Video Contents
 
@@ -146,7 +146,7 @@ The Google Drive link should then be added to this file.
 
 **Demo Video:**
 
-`[Paste Google Drive link here]`
+(https://legalease-3dnebkfbkugmt5tzfkndka.streamlit.app/)
 
 ## 9. Demonstration Outcome
 
