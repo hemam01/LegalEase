@@ -2,6 +2,8 @@
 
 ## Project Title
 
+
+
 LegalEase – AI-Powered Legal Document Generator
 
 ## 1. System Architecture
