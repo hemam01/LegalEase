@@ -33,4 +33,4 @@ def display_download_section(txt_data, docx_data, pdf_data):
         data=pdf_data,
         file_name="legal_document.pdf",
         mime="application/pdf"
-    )
+    ) 
