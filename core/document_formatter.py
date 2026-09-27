@@ -32,4 +32,4 @@ def format_pdf(content: str) -> bytes:
     pdf.output(output_path)
 
     with open(output_path, "rb") as file:
-        return file.read()
+        return file.read() 
